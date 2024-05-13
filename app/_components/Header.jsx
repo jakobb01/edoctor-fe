@@ -17,6 +17,16 @@ function Header() {
         },
         {
             id:3,
+            name:'Services',
+            path:'/'
+        },
+        {
+            id:4,
+            name:'Prescription medicine',
+            path:'/'
+        },
+        {
+            id:5,
             name:'Contact Us',
             path:'/'
         }
@@ -35,7 +45,10 @@ function Header() {
                     ))}
                 </ul>
             </div>
-            <Button>Get Started</Button>
+            <a href={'/login'}>
+                <Button>Get Started</Button>
+            </a>
+
         </div>
     )
 }
