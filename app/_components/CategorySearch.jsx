@@ -3,17 +3,18 @@ import React, {useEffect, useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Search} from "lucide-react";
-import GetCategory from "@/app/_utils/GetCategory";
 import Image from "next/image";
+import ClientReq from "@/app/_utils/ClientReq";
 
 function CategorySearch() {
 
-    let categoryJson = {};
+    // todo: move this logic to home and pass "categorylist" as a prop
     const [categoryList, setCategoryList] = useState([]);
 
     const fetchData = async () => {
+        let categoryJson = {};
         let list = [];
-        categoryJson = GetCategory.getCategory;
+        categoryJson = ClientReq.getCategory;
         for (var i in categoryJson) {
             list.push([i, categoryJson[i]])
         }
