@@ -144,7 +144,7 @@ function Footer() {
                             href="https://github.com/jakobb01/edoctor-fe"
                             rel="noreferrer"
                             target="_blank"
-                            className="text-teal-700 transition hover:text-teal-700/75"
+                            className="text-primary transition hover:text-secondary"
                         >
                             <span className="sr-only">GitHub</span>
                             <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
