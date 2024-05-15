@@ -24,8 +24,8 @@ function PopularDoctor() {
     })
 
     return (
-        <div className={'mb-10 px-8'}>
-            <h2 className={'font-bold text-xl'}>Popular Doctors</h2>
+        <div className={'mb-10 px-8 flex flex-col items-center'}>
+            <h2 className={'font-bold text-4xl tracking-wide'}>Popular Doctors</h2>
             <div className={'grid gird-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 mt-4'}>
                 {doctorList && doctorList.map((doctor, index)=>(
                     <div className={'border-[1px] border-blue-50 rounded-lg p-3 cursor-pointer hover:border-primary hover:shadow-xl'} key={index}>

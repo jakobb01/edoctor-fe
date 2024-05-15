@@ -1,6 +1,7 @@
 import { Raleway } from "next/font/google";
 import "./globals.css";
 import Header from "@/app/_components/Header";
+import Footer from "@/app/_components/Footer";
 
 const google_font = Raleway({ subsets: ["latin"] });
 
@@ -15,9 +16,10 @@ export default function RootLayout({ children }) {
       <body className={google_font.className}>
         <div className={'md:px-20'}>
           <Header/>
+          {children}
+          <Footer/>
         </div>
-
-      {children}</body>
+      </body>
     </html>
   );
 }

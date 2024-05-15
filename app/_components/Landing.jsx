@@ -115,7 +115,7 @@ function Landing() {
                 </svg>
               </span>
 
-                            <h2 className="mt-2 font-bold">Request sick days</h2>
+                            <h2 className="mt-2 font-bold">Request a fit note</h2>
 
                             <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
                                 Sent to your employer directly.
