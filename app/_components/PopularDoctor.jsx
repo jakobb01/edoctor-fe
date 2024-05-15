@@ -24,10 +24,10 @@ function PopularDoctor() {
     })
 
     return (
-        <div className={'mb-10 px-8 flex flex-col items-center'}>
-            <h2 className={'font-bold text-4xl tracking-wide'}>Popular Doctors</h2>
+        <div className={'mb-10 px-8'}>
+            <h2 className={'font-bold text-4xl tracking-wide text-center'}>Popular Doctors</h2>
             <div className={'grid gird-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 mt-4'}>
-                {doctorList && doctorList.map((doctor, index)=>(
+                {doctorList.length>0?doctorList.map((doctor, index)=>(
                     <div className={'border-[1px] border-blue-50 rounded-lg p-3 cursor-pointer hover:border-primary hover:shadow-xl'} key={index}>
                         <Image src={doctor[1].pic} alt={'doctor'} width={500} height={200} className={'h-[200px] w-full object-cover rounded'}></Image>
                         <div className={'mt-3 items-baseline flex flex-col gap-1'}>
@@ -38,7 +38,16 @@ function PopularDoctor() {
                             <Button className={'mt-5 hover:scale-105 transition-all ease-in-out hover:bg-blue-50 hover:text-primary'}>Book Now</Button>
                         </div>
                     </div>
-                ))}
+                ))
+                :
+                    // while waiting for data -> skeleton
+                    [1,2,3,4,5,6].map((item, index)=>(
+                        <div className={'h-[220px] bg-slate-200 w-full rounded-lg animate-pulse'}>
+
+
+                        </div>
+                    ))
+                }
             </div>
         </div>
     )
