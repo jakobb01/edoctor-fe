@@ -5,6 +5,7 @@ import {Input} from "@/components/ui/input";
 import {Search} from "lucide-react";
 import Image from "next/image";
 import ClientReq from "@/app/_utils/ClientReq";
+import Link from "next/link";
 
 function CategorySearch() {
 
@@ -39,9 +40,9 @@ function CategorySearch() {
 
             <div className={'grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 mt-5'}>
             {categoryList?categoryList.map((item, index)=>(
-                <div key={index} className={'flex flex-col text-center items-center p-5 bg-blue-50 m-2 rounded-lg cursor-pointer gap-2 hover:scale-105 transition-all ease-in-out'}>
+                <Link href={'/search/'+item[1].name} key={index} className={'flex flex-col text-center items-center p-5 bg-blue-50 m-2 rounded-lg cursor-pointer gap-2 hover:scale-105 transition-all ease-in-out'}>
                     <label className={'cursor-pointer'}>{item[1].name}</label>
-                </div>
+                </Link>
             ))
             :
                 [1,2,3].map((item, index)=>(

@@ -4,7 +4,11 @@ import React from "react";
 const getCategory = {
     1:{id: 1, name:"Dentist"},
     2:{id: 2, name:"Optometrist"},
-    3:{id: 3, name:"Surgeon"}
+    3:{id: 3, name:"Surgeon"},
+    4:{id: 4, name:"Neurologist"},
+    5:{id: 5, name:"Cardiologist"},
+    6:{id: 6, name:"General Doctor"}
+
 }
 
 // todo: get request to backend to gather all doctors
