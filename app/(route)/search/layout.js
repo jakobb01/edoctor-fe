@@ -7,7 +7,7 @@ function Layout({children, params}) {
             <div className={'hidden md:block'}>
                 <CategoryList category={params.categoryName}/>
             </div>
-            <div className={'col-span-3'}>
+            <div className={'col-span-4 md:col-span-3'}>
                 {children}
             </div>
         </div>

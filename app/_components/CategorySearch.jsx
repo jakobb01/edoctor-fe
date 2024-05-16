@@ -23,7 +23,7 @@ function CategorySearch() {
     }
     useEffect(()=>{
         fetchData()
-    })
+    }, [])
 
 
     return (

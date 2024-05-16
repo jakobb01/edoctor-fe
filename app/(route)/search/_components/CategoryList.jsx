@@ -33,7 +33,7 @@ function CategoryList() {
                         <Link
                             href={'/search/'+item[1].name}
                             className={'block rounded-lg p-2 font-medium items-center flex hover:bg-blue-50 hover:text-gray-700 '
-                                + (category===item[1].name?'bg-blue-50 text-bold text-primary':'text-sm text-secondary')}
+                                + (category===item[1].name?'bg-blue-50 text-bold text-primary':'text-secondary')}
                         >
                             {item[1].name}
                         </Link>
