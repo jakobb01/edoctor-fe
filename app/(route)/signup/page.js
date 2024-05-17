@@ -21,8 +21,9 @@ function SignupForm() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        await signup(formState);
-        document.getElementById("signupForm").reset();
+        const res = await signup(formState);
+        console.log(res)
+        //document.getElementById("signupForm").reset();
 
 
     }

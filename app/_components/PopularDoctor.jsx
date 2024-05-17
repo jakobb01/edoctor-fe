@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
+import Link from "next/link";
 
 
 function PopularDoctor({doctorList, heading = 'Popular Doctors'}) {
@@ -21,9 +22,12 @@ function PopularDoctor({doctorList, heading = 'Popular Doctors'}) {
                                 <h2 className={'font-bold'}>Dr. {doctor[1].name} {doctor[1].surname}</h2>
                                 <h2 className={'text-secondary text-sm font-bold'}>{doctor[1].location}</h2>
 
-                                <Button
-                                    className={'mt-5 hover:scale-105 transition-all ease-in-out hover:bg-blue-50 hover:text-primary'}>Book
-                                    Now</Button>
+                                <Link href={'/details/'+doctor[1].id}>
+                                    <Button
+                                        className={'mt-5 hover:scale-105 transition-all ease-in-out hover:bg-blue-50 hover:text-primary'}>
+                                        Book Now</Button>
+                                </Link>
+
                             </div>
                         </div>
                     ))
