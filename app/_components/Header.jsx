@@ -1,14 +1,16 @@
 "use client"
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {getUser} from "@/app/actions/auth";
+import {getUser, logout} from "@/app/actions/auth";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import { CircleUserRound } from 'lucide-react';
+
 
 
 function Header() {
@@ -40,10 +42,13 @@ function Header() {
         }
     ]
 
-    let user = {};
+    const [user, setUser] = useState({username: '', password: ''});
     const fetchData = async () => {
-         user = await getUser(true);
-         console.log(user)
+         setUser(await getUser());
+    }
+
+    const setLogout = async () => {
+        await logout()
     }
 
     useEffect(()=>{
@@ -57,19 +62,26 @@ function Header() {
                        width={130} height={30}
                 />
                 <ul className={'md:flex gap-8 hidden'}>
-                    {Menu.map((item, index)=>(
+                    {Menu.map((item, index) => (
                         <Link href={item.path}>
                             <li className={'hover:text-secondary cursor-pointer hover:scale-105 transition-all ease-in-out'}>{item.name}</li>
                         </Link>
                     ))}
                 </ul>
             </div>
-            {user.username?
+            {user.username.length>0?
                 <Popover>
-                    <PopoverTrigger>{user.username}</PopoverTrigger>
-                    <PopoverContent>Place content for the popover here.</PopoverContent>
+                    <PopoverTrigger className={'bg-blue-50 p-4 rounded-full flex gap-x-2 text-primary font-bold'}>
+                        <CircleUserRound/>{user.username}
+                    </PopoverTrigger>
+                    <PopoverContent className={'w-36'}>
+                        <ul className={'flex flex-col gap-2'}>
+                            <li className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Profile</li>
+                            <li className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Booking</li>
+                            <li className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}><button onClick={setLogout}>Logout</button></li>
+                        </ul>
+                    </PopoverContent>
                 </Popover>
-
                 :
                 <Link href={'/login'}>
                     <Button className={'cursor-pointer hover:scale-105 transition-all ease-in-out'}>Get Started</Button>
@@ -78,10 +90,8 @@ function Header() {
             }
 
 
-
-
         </div>
-    )
+    );
 }
 
 export default Header
