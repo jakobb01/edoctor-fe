@@ -22,3 +22,10 @@ export async function auth_login() {
     // todo: check user session
     return false;
 }
+
+export async function getUser(bool) {
+    if (bool)
+        return {username: 'Jakob', email: 'jakob@test.com'}
+    else
+        return {}
+}

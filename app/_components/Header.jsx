@@ -1,7 +1,15 @@
-import React from 'react'
+"use client"
+import React, {useEffect} from 'react'
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import {getUser} from "@/app/actions/auth";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+
 
 function Header() {
     const Menu =[
@@ -31,6 +39,17 @@ function Header() {
             path:'/'
         }
     ]
+
+    let user = {};
+    const fetchData = async () => {
+         user = await getUser(true);
+         console.log(user)
+    }
+
+    useEffect(()=>{
+        fetchData()
+    }, [])
+
     return (
         <div className={'mx-auto max-w-screen-2xl flex items-center justify-between p-4 shadow-sm'}>
             <div className={'flex items-center gap-10'}>
@@ -45,9 +64,21 @@ function Header() {
                     ))}
                 </ul>
             </div>
-            <a href={'/login'}>
-                <Button className={'cursor-pointer hover:scale-105 transition-all ease-in-out'}>Get Started</Button>
-            </a>
+            {user.username && user.username.length>0?
+                <Popover>
+                    <PopoverTrigger>Open</PopoverTrigger>
+                    <PopoverContent>Place content for the popover here.</PopoverContent>
+                </Popover>
+
+                :
+                <Link href={'/login'}>
+                    <Button className={'cursor-pointer hover:scale-105 transition-all ease-in-out'}>Get Started</Button>
+                </Link>
+
+            }
+
+
+
 
         </div>
     )
