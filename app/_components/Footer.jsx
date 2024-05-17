@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Link from "next/link";
 import {Button} from "@/components/ui/button";
 
 function Footer() {
@@ -40,33 +40,33 @@ function Footer() {
 
                     <ul className="mt-8 space-y-4 text-sm">
                         <li>
-                            <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
+                            <Link className="text-gray-700 transition hover:text-gray-700/75" href="/search">
                                 Doctor search
-                            </a>
+                            </Link>
                         </li>
 
                         <li>
-                            <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
+                            <Link className="text-gray-700 transition hover:text-gray-700/75" href="/search">
                                 Book appointments
-                            </a>
+                            </Link>
                         </li>
 
                         <li>
-                            <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
+                            <Link className="text-gray-700 transition hover:text-gray-700/75" href="#/dashboard/fitnote">
                                 Request a fit note
-                            </a>
+                            </Link>
                         </li>
 
                         <li>
-                            <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
+                            <Link className="text-gray-700 transition hover:text-gray-700/75" href="/dashboard/prescription">
                                 Request a prescription
-                            </a>
+                            </Link>
                         </li>
 
                         <li>
-                            <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
+                            <Link className="text-gray-700 transition hover:text-gray-700/75" href="/dashboard/records">
                                 Access to medical records
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

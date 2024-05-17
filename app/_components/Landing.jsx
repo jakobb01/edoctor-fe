@@ -1,5 +1,7 @@
 import React from "react";
 import {Button} from "@/components/ui/button";
+import Link from "next/link";
+
 
 function Landing() {
     return (
@@ -15,20 +17,20 @@ function Landing() {
                             minima aliquid tempora. Obcaecati, autem.
                         </p>
 
-                        <a href={'/login'}>
+                        <Link href={'/login'}>
                             <Button
                                 className="mt-8 cursor-pointer hover:scale-105 transition-all ease-in-out"
                             >
                                 Get Started Today
                             </Button>
-                        </a>
+                        </Link>
 
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                        <a
+                        <Link
                             className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                            href="#"
+                            href="/search"
                         >
               <span className="inline-block rounded-lg bg-gray-50 p-3">
                 <svg
@@ -56,11 +58,11 @@ function Landing() {
                             <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
                                 Get checked with a professional.
                             </p>
-                        </a>
+                        </Link>
 
-                        <a
+                        <Link
                             className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                            href="#"
+                            href="/dashboard/prescription"
                         >
               <span className="inline-block rounded-lg bg-gray-50 p-3">
                 <svg
@@ -88,11 +90,11 @@ function Landing() {
                             <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
                                 Easy to request, easy to manage.
                             </p>
-                        </a>
+                        </Link>
 
-                        <a
+                        <Link
                             className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
-                            href="#"
+                            href="/dashboard/fitnote"
                         >
               <span className="inline-block rounded-lg bg-gray-50 p-3">
                 <svg
@@ -120,7 +122,7 @@ function Landing() {
                             <p className="hidden sm:mt-1 sm:block sm:text-sm sm:text-gray-600">
                                 Sent to your employer directly.
                             </p>
-                        </a>
+                        </Link>
 
                         <a
                             className="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"

@@ -26,7 +26,7 @@ function CategoryList() {
     })
 
     return (
-        <div className={'h-full mt-5 flex flex-col'}>
+        <div className={'h-screen mt-5 flex flex-col'}>
             <ul className="space-y-1">
                 {categoryList && categoryList.map((item, index) => (
                     <li key={index}>

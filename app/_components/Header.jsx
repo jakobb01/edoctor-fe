@@ -20,23 +20,23 @@ function Header() {
         },
         {
             id:2,
-            name:'Explore',
-            path:'/explore'
+            name:'Search',
+            path:'/search'
         },
         {
             id:3,
             name:'Services',
-            path:'/'
+            path:'/dashboard'
         },
         {
             id:4,
-            name:'Prescription medicine',
-            path:'/'
+            name:'Pharmacy',
+            path:'/pharmacy'
         },
         {
             id:5,
-            name:'Contact Us',
-            path:'/'
+            name:'About Us',
+            path:'/about'
         }
     ]
 
@@ -64,9 +64,9 @@ function Header() {
                     ))}
                 </ul>
             </div>
-            {user.username && user.username.length>0?
+            {user.username?
                 <Popover>
-                    <PopoverTrigger>Open</PopoverTrigger>
+                    <PopoverTrigger>{user.username}</PopoverTrigger>
                     <PopoverContent>Place content for the popover here.</PopoverContent>
                 </Popover>
 

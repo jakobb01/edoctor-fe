@@ -22,12 +22,12 @@ export default function Home() {
     useEffect(() => {
         fetchData()
     }, []);
-    
+
     return (
         <div>
             <Landing/>
 
-            <CategorySearch/>
+            <CategorySearch categoryOnOff={true}/>
 
             <PopularDoctor doctorList={doctorList}/>
 

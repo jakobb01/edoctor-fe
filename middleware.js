@@ -3,7 +3,7 @@ import { auth_login} from "@/app/actions/auth";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request) {
-    if (!(await auth_login())) {
+    if (!(await auth_login(true))) {
         return NextResponse.redirect(new URL('/login', request.url))
     }
 }

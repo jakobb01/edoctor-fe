@@ -18,9 +18,9 @@ export async function signup(formData) {
     // todo: call to db/backend to create a user THEN return bool
 }
 
-export async function auth_login() {
+export async function auth_login(bool) {
     // todo: check user session
-    return false;
+    return bool;
 }
 
 export async function getUser(bool) {
