@@ -2,6 +2,10 @@
 import React from "react";
 import {redirect} from "next/navigation";
 import { v4 as uuidv4 } from 'uuid';
+import { sql } from "@vercel/postgres";
+import { NextResponse } from 'next/server';
+import bcrypt from "bcrypt";
+const saltRounds = 6;
 
 let user_bool = true;
 export async function signup(formData) {
@@ -15,12 +19,15 @@ export async function signup(formData) {
 
     const success =  username.length > 0 && email.length > 0 && password.length > 3;
     if (success) {
-        user_bool = true;
-        return redirect('/')
-
-
-
-
+        bcrypt.hash(password, saltRounds, async function (err, hash) {
+            try {
+                sql`INSERT INTO "User" (uuid, username, email, password) VALUES (${id}, ${username}, ${email}, ${hash});`;
+            } catch (error) {
+                return NextResponse.json({error});
+            }
+        });
+        const result = await sql`SELECT * FROM "User";`;
+        return NextResponse.json({ result });
 
     } else {
         user_bool = false
