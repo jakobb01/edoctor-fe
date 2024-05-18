@@ -4,8 +4,7 @@ import {redirect} from "next/navigation";
 import { v4 as uuidv4 } from 'uuid';
 import { sql } from "@vercel/postgres";
 import { NextResponse } from 'next/server';
-import bcrypt from "bcrypt";
-const saltRounds = 6;
+import simplecrypt from "simplecrypt";
 
 let user_bool = true;
 export async function signup(formData) {
@@ -14,18 +13,20 @@ export async function signup(formData) {
     const email = formData.email;
     const password = formData.password;
 
-    // generate uuid
-    const id = uuidv4();
+
 
     const success =  username.length > 0 && email.length > 0 && password.length > 3;
+    // generate uuid && hash pasword
+    const id = uuidv4();
+    var sc = simplecrypt();
+    var hash = sc.encrypt(password);
     if (success) {
-        bcrypt.hash(password, saltRounds, async function (err, hash) {
-            try {
-                sql`INSERT INTO "User" (uuid, username, email, password) VALUES (${id}, ${username}, ${email}, ${hash});`;
-            } catch (error) {
-                return NextResponse.json({error});
-            }
-        });
+        try {
+            sql`INSERT INTO "User" (uuid, username, email, password) VALUES (${id}, ${username}, ${email}, ${hash});`;
+        } catch (error) {
+            return NextResponse.json({error});
+        }
+
         const result = await sql`SELECT * FROM "User";`;
         return NextResponse.json({ result });
 
