@@ -14,13 +14,13 @@ function PopularDoctor({doctorList, heading = 'Popular Doctors'}) {
                 {doctorList.length > 0 ? doctorList.map((doctor, index) => (
                         <div
                             className={'border-[1px] border-blue-50 rounded-lg p-3 cursor-pointer hover:border-primary hover:shadow-xl'}
-                            key={index}>
+                            key={doctor.id}>
                             <Image src={doctor[1].pic} alt={'doctor'} width={500} height={200}
                                    className={'h-[200px] w-full object-cover rounded'}></Image>
-                            <div className={'mt-3 items-baseline flex flex-col gap-1'}>
-                                <h2 className={'text-sm bg-blue-50 p-1 rounded-full px-2 text-primary'}>{doctor[1].category}</h2>
-                                <h2 className={'font-bold'}>Dr. {doctor[1].name} {doctor[1].surname}</h2>
-                                <h2 className={'text-secondary text-sm font-bold'}>{doctor[1].location}</h2>
+                            <div key={index+index} className={'mt-3 items-baseline flex flex-col gap-1'}>
+                                <h2 key={doctor.id+'category'} className={'text-sm bg-blue-50 p-1 rounded-full px-2 text-primary'}>{doctor[1].category}</h2>
+                                <h2 key={doctor.id+'name'} className={'font-bold'}>Dr. {doctor[1].name} {doctor[1].surname}</h2>
+                                <h2 key={doctor.id+'location'} className={'text-secondary text-sm font-bold'}>{doctor[1].location}</h2>
 
                                 <Link href={'/details/'+doctor[1].id}>
                                     <Button

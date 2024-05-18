@@ -3,8 +3,11 @@ import React, {useState} from "react";
 import { signup } from '@/app/actions/auth'
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 function SignupForm() {
+    const router = useRouter()
+    const [fail, setFail] = useState(false);
     const [formState, setFormState] = useState({
         username: '',
         email: '',
@@ -12,6 +15,7 @@ function SignupForm() {
     });
 
     const handleChange = (e) => {
+        setFail(false);
         const { name, value } = e.target;
         setFormState((prevState) => ({
             ...prevState,
@@ -21,15 +25,26 @@ function SignupForm() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const res = await signup(formState);
-        console.log(res)
-        //document.getElementById("signupForm").reset();
+        const success =  formState.username.length > 0 && formState.email.length > 0 && formState.password.length > 3;
+        if (success) {
+            const res = await signup(formState);
+            if (res) {
+                await router.push('/dashboard')
+            } else {
+                setFail(true)
+                document.getElementById("signupForm").reset();
+            }
+        } else {
+            setFail(true)
+        }
+
 
 
     }
 
     return (
         <div className="flex flex-col items-center mt-10">
+            {fail?<p className={'text-center m-2 text-red-500 text-xs italic'}>Something went wrong, please try again.</p>:''}
             <form id={'signupForm'} onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <h2 className={'text-center text-lg mb-2'}>CREATE AN ACCOUNT</h2>
                 <div className="mb-4">

@@ -59,12 +59,12 @@ function Header() {
         <div className={'mx-auto max-w-screen-2xl flex items-center justify-between p-4 shadow-sm'}>
             <div className={'flex items-center gap-10'}>
                 <Image src={'/logo.svg'} alt={'logo'}
-                       width={130} height={30}
+                       width={'130'} height={'30'}
                 />
                 <ul className={'md:flex gap-8 hidden'}>
                     {Menu.map((item, index) => (
-                        <Link href={item.path}>
-                            <li className={'hover:text-secondary cursor-pointer hover:scale-105 transition-all ease-in-out'}>{item.name}</li>
+                        <Link key={item.id} href={item.path}>
+                            <li key={item.id+item.id} className={'hover:text-secondary cursor-pointer hover:scale-105 transition-all ease-in-out'}>{item.name}</li>
                         </Link>
                     ))}
                 </ul>
@@ -76,9 +76,9 @@ function Header() {
                     </PopoverTrigger>
                     <PopoverContent className={'w-36'}>
                         <ul className={'flex flex-col gap-2'}>
-                            <li className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Profile</li>
-                            <li className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Booking</li>
-                            <li className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}><button onClick={setLogout}>Logout</button></li>
+                            <li key={'profile'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Profile</li>
+                            <li key={'booking'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Booking</li>
+                            <li key={'logout'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}><button onClick={setLogout}>Logout</button></li>
                         </ul>
                     </PopoverContent>
                 </Popover>

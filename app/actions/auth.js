@@ -4,9 +4,10 @@ import {redirect} from "next/navigation";
 import { v4 as uuidv4 } from 'uuid';
 import { sql } from "@vercel/postgres";
 import { NextResponse } from 'next/server';
-import simplecrypt from "simplecrypt";
+import {hash} from "@/app/bcrypt/custom_bcrypt";
 
 let user_bool = true;
+
 export async function signup(formData) {
     // Validate form fields
     const username = formData.username;
@@ -14,28 +15,18 @@ export async function signup(formData) {
     const password = formData.password;
 
 
-
-    const success =  username.length > 0 && email.length > 0 && password.length > 3;
     // generate uuid && hash pasword
     const id = uuidv4();
-    var sc = simplecrypt();
-    var hash = sc.encrypt(password);
-    if (success) {
-        try {
-            sql`INSERT INTO "User" (uuid, username, email, password) VALUES (${id}, ${username}, ${email}, ${hash});`;
-        } catch (error) {
-            return NextResponse.json({error});
-        }
-
-        const result = await sql`SELECT * FROM "User";`;
-        return NextResponse.json({ result });
-
-    } else {
-        user_bool = false
-        return redirect('/KRNEKINEDELA')
+    const hash_pass = hash(password)
+    try {
+        await sql`INSERT INTO "User" (uuid, username, email, password) VALUES (${id}, ${username}, ${email}, ${hash_pass});`;
+    } catch (error) {
+        return {error};
     }
+    const result = await sql`SELECT * FROM "User";`;
+    return {ok: result};
 
-    // todo: call to db/backend to create a user THEN return bool
+
 }
 
 export async function auth_login() {
