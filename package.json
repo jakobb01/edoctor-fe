@@ -14,11 +14,13 @@
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-slot": "^1.0.2",
     "@vercel/postgres": "^0.8.0",
+    "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "lucide-react": "^0.378.0",
     "next": "^14.2.3",
+    "pg": "^8.11.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "simplecrypt": "^0.1.0",
@@ -29,5 +31,10 @@
   "devDependencies": {
     "postcss": "^8",
     "tailwindcss": "^3.4.1"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }

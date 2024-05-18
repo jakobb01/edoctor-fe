@@ -1,8 +1,9 @@
 "use client"
 import React, {useState} from "react";
-import { signup } from '@/app/actions/auth'
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import handler from "@/app/api/signup/route";
+import axios from 'axios';
 
 function SignupForm() {
     const [formState, setFormState] = useState({
@@ -19,14 +20,25 @@ function SignupForm() {
         }));
     };
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e)  {
         e.preventDefault();
-        const res = await signup(formState);
-        console.log(res)
-        //document.getElementById("signupForm").reset();
+        try {
+            console.log(formState);  // Log the current form state
 
+            await axios.post('/api/signUp', formState)
+            const res = await handler(formState);  // Await the result of the signup function
+            console.log(res);  // Log the response from the signup function
 
-    }
+            // Optionally reset the form on successful signup
+            if (res.success) {
+                document.getElementById("signupForm").reset();
+            } else {
+                console.error('Signup failed', res.message);
+            }
+        } catch (error) {
+            console.error('An error occurred during signup', error);
+        }
+    };
 
     return (
         <div className="flex flex-col items-center mt-10">
