@@ -1,11 +1,7 @@
 "use server"
 import React from "react";
 import {redirect} from "next/navigation";
-import {NextResponse} from "next/server";
 import { v4 as uuidv4 } from 'uuid';
-import bcrypt from "bcrypt";
-const saltRounds = 6;
-import conn from "@/app/config/db";
 
 let user_bool = true;
 export async function signup(formData) {
@@ -19,24 +15,8 @@ export async function signup(formData) {
 
     const success =  username.length > 0 && email.length > 0 && password.length > 3;
     if (success) {
-        bcrypt.hash(password, saltRounds, async function (err, hash) {
-            try {
-                const results = await new Promise((resolve, reject) => {
-                    conn.query(`INSERT INTO User (uuid, username, email, password) VALUES (?, ?, ?, ?)`, [id, username, email, hash], (err, res) => {
-                        if (err) {
-                            reject(err)
-                        } else {
-                            resolve(res)
-                        }
-                    });
-                });
-                return NextResponse.json(results);
-            } catch (err) {
-                return NextResponse.json(
-                    {message: err}
-                )
-            }
-        })
+        user_bool = true;
+        return redirect('/')
 
 
 
