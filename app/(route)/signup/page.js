@@ -29,7 +29,7 @@ function SignupForm() {
         if (success) {
             const res = await signup(formState);
             if (res) {
-                await router.push('/dashboard')
+                await router.push('/login')
             } else {
                 setFail(true)
                 document.getElementById("signupForm").reset();
@@ -37,9 +37,6 @@ function SignupForm() {
         } else {
             setFail(true)
         }
-
-
-
     }
 
     return (

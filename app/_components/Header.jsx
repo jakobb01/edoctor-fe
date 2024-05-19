@@ -44,11 +44,17 @@ function Header() {
 
     const [user, setUser] = useState({username: '', password: ''});
     const fetchData = async () => {
-         setUser(await getUser());
+        const res = await getUser();
+        if (res.ok) {
+            setUser(res.data);
+        } else {
+            setUser({username: '', password: ''})
+        }
     }
 
     const setLogout = async () => {
         await logout()
+        fetchData()
     }
 
     useEffect(()=>{
@@ -69,7 +75,7 @@ function Header() {
                     ))}
                 </ul>
             </div>
-            {user.username.length>0?
+            {user && user.username.length>0?
                 <Popover>
                     <PopoverTrigger className={'bg-blue-50 p-4 rounded-full flex gap-x-2 text-primary font-bold'}>
                         <CircleUserRound/>{user.username}
@@ -78,7 +84,7 @@ function Header() {
                         <ul className={'flex flex-col gap-2'}>
                             <li key={'profile'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Profile</li>
                             <li key={'booking'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Booking</li>
-                            <li key={'logout'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}><button onClick={setLogout}>Logout</button></li>
+                            <Link key={'logout'} href={'/login'} onClick={setLogout} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Logout</Link>
                         </ul>
                     </PopoverContent>
                 </Popover>

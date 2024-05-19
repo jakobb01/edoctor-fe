@@ -4,12 +4,14 @@ import {redirect} from "next/navigation";
 import { v4 as uuidv4 } from 'uuid';
 import { sql } from "@vercel/postgres";
 import { NextResponse } from 'next/server';
-import {hash} from "@/app/bcrypt/custom_bcrypt";
+import {compare, hash} from "@/app/bcrypt/custom_bcrypt";
+import { cookies } from 'next/headers';
+
 
 let user_bool = true;
 
 export async function signup(formData) {
-    // Validate form fields
+    // Get form fields
     const username = formData.username;
     const email = formData.email;
     const password = formData.password;
@@ -24,32 +26,76 @@ export async function signup(formData) {
         return {error};
     }
     const result = await sql`SELECT * FROM "User";`;
-    return {ok: result};
-
-
+    return {ok: result.rows};
 }
 
 export async function auth_login() {
     // todo: check user session
-    return user_bool;
+    const token = cookies().get('token');
+
+    if (token) {
+        return {ok: true, auth: token};
+    } else {
+        return {ok: false, auth: ''};
+    }
+
+
 }
 
 export async function getUser() {
-    // todo: check if session is still going an return user name and email
-    if (user_bool)
-        return {username: 'Jakob', email: 'jakob@test.com'};
-    else
-        return {username: '', email: ''};
+    // todo: get uuid and use it in query to get user data
+    let uuid = '';
+    const user = await auth_login();
+    console.log(user)
+    if (user.ok) {
+        uuid = user.auth.value;
+    } else {
+        return {ok: false, data: {username: '', password: ''}}
+    }
+
+    let result;
+    try {
+        result = await sql`SELECT username, email FROM "User" WHERE uuid = ${uuid};`;
+        // should look like that: {username: 'Jakob', email: 'jakob@test.com'}
+        console.log(result.rows[0])
+    } catch (error) {
+        return {ok: false, data: {error: error.message}};
+    }
+    return {ok: true, data: result.rows[0]}
 }
 
-export async function login({formData}) {
-    // todo: try to login user
-    user_bool = true;
-    return redirect('/');
+export async function login(formData) {
+    // Get form fields
+    const username = formData.username;
+    const password = formData.password;
+    let result;
+    let compare_psw;
+
+    try {
+        result = await sql`SELECT uuid, password FROM "User" WHERE username = ${username};`;
+    } catch (error) {
+        return {ok: false, status: error.message};
+    }
+
+    try {
+        compare_psw = compare(password, result.rows[0].password);
+    } catch (error) {
+        return {ok: false, status: error.message};
+    }
+
+    if (compare_psw) {
+        // todo: get uuid and set auth_login ON
+        cookies().set('token', result.rows[0].uuid, { maxAge: 3600 });
+        return {ok: true, status: result.rows[0].uuid};
+    } else {
+        return {ok: false, status: 'Password does not match'};
+    }
+
+    return {ok: false, data: 'Smth went wrong'};
+
 }
 
 export async function logout() {
-    // todo: logout the user
-    user_bool = false;
-    return redirect('/login');
+    // todo: logout user -> cancel session
+    cookies().delete('token');
 }

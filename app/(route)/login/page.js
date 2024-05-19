@@ -5,12 +5,14 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 
 export default function LoginForm() {
+    const [fail, setFail] = useState(false);
     const [formState, setFormState] = useState({
         username: '',
         password: '',
     });
 
     const handleChange = (e) => {
+        setFail(false);
         const { name, value } = e.target;
         setFormState((prevState) => ({
             ...prevState,
@@ -20,14 +22,23 @@ export default function LoginForm() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        await login(formState);
-        document.getElementById("loginForm").reset();
-
-
+        const success =  formState.username.length > 0 && formState.password.length > 3;
+        if (success) {
+            const res = await login(formState);
+            if (res.ok) {
+                await window.location.assign('/dashboard')
+            } else {
+                setFail(true)
+                document.getElementById("loginForm").reset();
+            }
+        } else {
+            setFail(true)
+        }
     }
 
     return (
         <div className="flex flex-col items-center mt-10">
+            {fail?<p className={'text-center m-2 text-red-500 text-xs italic'}>Wrong password or username, please try again.</p>:''}
             <form id={'loginForm'} onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <h2 className={'text-center text-lg mb-2'}>LOGIN</h2>
                 <div className="mb-4">
