@@ -1,14 +1,10 @@
 "use server"
 import React from "react";
-import {redirect} from "next/navigation";
 import { v4 as uuidv4 } from 'uuid';
 import { sql } from "@vercel/postgres";
-import { NextResponse } from 'next/server';
 import {compare, hash} from "@/app/bcrypt/custom_bcrypt";
 import { cookies } from 'next/headers';
 
-
-let user_bool = true;
 
 export async function signup(formData) {
     // Get form fields
@@ -30,20 +26,17 @@ export async function signup(formData) {
 }
 
 export async function auth_login() {
-    // todo: check user session
+    // check user session
     const token = cookies().get('token');
-
     if (token) {
         return {ok: true, auth: token};
     } else {
         return {ok: false, auth: ''};
     }
-
-
 }
 
 export async function getUser() {
-    // todo: get uuid and use it in query to get user data
+    // get uuid and use it in query to get user data
     let uuid = '';
     const user = await auth_login();
     console.log(user)
@@ -57,7 +50,7 @@ export async function getUser() {
     try {
         result = await sql`SELECT username, email FROM "User" WHERE uuid = ${uuid};`;
         // should look like that: {username: 'Jakob', email: 'jakob@test.com'}
-        console.log(result.rows[0])
+        // console.log(result.rows[0])
     } catch (error) {
         return {ok: false, data: {error: error.message}};
     }
@@ -84,7 +77,7 @@ export async function login(formData) {
     }
 
     if (compare_psw) {
-        // todo: get uuid and set auth_login ON
+        // get uuid and set cookies
         cookies().set('token', result.rows[0].uuid, { maxAge: 3600 });
         return {ok: true, status: result.rows[0].uuid};
     } else {
@@ -96,6 +89,6 @@ export async function login(formData) {
 }
 
 export async function logout() {
-    // todo: logout user -> cancel session
+    // logout user -> cancel session
     cookies().delete('token');
 }

@@ -1,27 +1,22 @@
 "use client"
-import Image from "next/image";
-import {Button} from "@/components/ui/button";
 import Landing from "@/app/_components/Landing";
 import CategorySearch from "@/app/_components/CategorySearch";
 import PopularDoctor from "@/app/_components/PopularDoctor";
 import {useEffect, useState} from "react";
-import ClientReq from "@/app/_utils/ClientReq";
+import {db_getDoctors} from "@/app/_utils/doctorApi";
 
 export default function Home() {
     const [doctorList, setDoctorList] = useState([]);
 
-    const fetchData = async () => {
-        let doctorJson = {};
-        let list = [];
-        doctorJson = ClientReq.getDoctors;
-        for (var i in doctorJson) {
-            list.push([i, doctorJson[i]])
-        }
-        setDoctorList(await list)
+    useEffect(()=>{
+        getDoctorList();
+    }, [])
+    const getDoctorList=()=>{
+        // getFunction(params.recordId)
+        db_getDoctors().then(resp => {
+            setDoctorList(resp.data);
+        })
     }
-    useEffect(() => {
-        fetchData()
-    }, []);
 
     return (
         <div>
@@ -29,7 +24,7 @@ export default function Home() {
 
             <CategorySearch categoryOnOff={true}/>
 
-            <PopularDoctor doctorList={doctorList}/>
+            {doctorList && <PopularDoctor doctorList={doctorList}/>}
 
         </div>
     );

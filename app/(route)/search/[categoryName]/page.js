@@ -2,26 +2,21 @@
 import React, {useEffect, useState} from "react";
 import ClientReq from "@/app/_utils/ClientReq";
 import PopularDoctor from "@/app/_components/PopularDoctor";
+import {db_getDoctorById, db_getDoctorsByCategory} from "@/app/_utils/doctorApi";
 
 function Search({params}) {
-
-    const category = params.categoryName
+    const category = params.categoryName.replace(/%20/g, " ");
     const [doctorList, setDoctorList] = useState([]);
 
-    const fetchData = async () => {
-        let doctorJson = {};
-        let list = [];
-        doctorJson = ClientReq.getDoctors;
-        for (var i in doctorJson) {
-            if (doctorJson[i].category===category) {
-                list.push([i, doctorJson[i]])
-            }
-        }
-        setDoctorList(await list)
-    }
     useEffect(()=>{
-        fetchData()
+        getDoctorsByCat();
     }, [])
+    const getDoctorsByCat=()=>{
+        // getFunction(params.recordId)
+        db_getDoctorsByCategory(category).then(resp => {
+            setDoctorList(resp.data);
+        })
+    }
 
 
     return (
