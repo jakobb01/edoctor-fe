@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react";
 import {db_getDoctorById} from "@/app/_utils/doctorApi";
 import DoctorDetail from "@/app/(route)/details/_components/DoctorDetail";
-import DoctorSuggestionList from "@/app/(route)/search/_components/DoctorSuggestion";
+import DoctorSuggestionList from "@/app/(route)/details/_components/DoctorSuggestion";
 
 function Details({params}) {
 

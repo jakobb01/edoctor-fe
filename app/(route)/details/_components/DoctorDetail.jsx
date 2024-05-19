@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import {MapPin} from "lucide-react";
-import {Button} from "@/components/ui/button";
+import BookAppointment from "@/app/(route)/details/_components/BookAppointment";
 
 export default function DoctorDetail({doctor}) {
     return (
@@ -19,7 +19,7 @@ export default function DoctorDetail({doctor}) {
                 </h2>
                 <h2 key={doctor.id+'category'} className={'text-sm bg-blue-50 p-1 rounded-full px-2 text-primary'}>{doctor.category}</h2>
 
-                <Button className={'mt-5 hover:scale-105 transition-all ease-in-out hover:bg-blue-50 hover:text-primary'}>Book Appointment</Button>
+                <BookAppointment doctorID={doctor.id}/>
             </div>
         </div>
     )
