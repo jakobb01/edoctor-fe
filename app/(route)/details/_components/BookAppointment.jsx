@@ -14,6 +14,7 @@ import { Textarea } from '@/components/ui/textarea'
 import {getUser} from "@/app/actions/auth";
 import { Toaster } from "@/components/ui/sonner"
 import {toast} from "sonner";
+import {db_insertBooking} from "@/app/_utils/bookingApi";
 
 export default function BookAppointment({doctorID}) {
 
@@ -77,15 +78,30 @@ export default function BookAppointment({doctorID}) {
             }
         }
         console.log(data)
+
+        // call db function to store booking
         if (data) {
-            toast(<div>
-                <h2 className={'text-bold text-lg text-primary'}>Booking confirmation sent on Email</h2>
-                <p className={'text-secondary text-base'}>{'Selected time: '+date.getDay()+'.'+date.getMonth()+'.'+date.getFullYear() + ' at ' + selectedTimeSlot}</p>
-            </div>)
-            setDate(null);
-            setSelectedTimeSlot(null);
+            const insertBooking = await db_insertBooking(data)
+            if (insertBooking.ok) {
+                toast(<div>
+                    <h2 className={'text-bold text-lg text-primary'}>Booking confirmation sent on Email</h2>
+                    <p className={'text-secondary text-base'}>{'Selected time: '+date.toString().split(' ')[2]+' '+date.toString().split(' ')[1]+' '+date.toString().split(' ')[3]+' at ' + selectedTimeSlot}</p>
+                </div>)
+                setDate(null);
+                setSelectedTimeSlot(null);
+            } else {
+                alert("Db insertion fail")
+                window.location.reload()
+            }
+        } else {
+            alert("Data not ok")
+            window.location.reload()
         }
-        // todo: call db function to store booking and send email?
+
+
+
+
+
     }
 
 
