@@ -52,6 +52,7 @@ export default function BookAppointment({doctor}) {
     const saveBooking = async () => {
         // get user data from cookies
         let user;
+        console.log(note)
         const res = await getUser();
         if (res.ok) {
             user = res.data;
@@ -77,7 +78,7 @@ export default function BookAppointment({doctor}) {
                 doctor_fullname: doctor.name + ' ' + doctor.surname,
                 doctor_picture: doctor.picture,
                 doctor_location: doctor.location,
-                Note: note
+                note: note
             }
         }
         console.log(data)

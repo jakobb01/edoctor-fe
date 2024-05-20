@@ -15,7 +15,7 @@ export default function BookingList({bookingList,expired,updateRecord}) {
         const resp = await db_deleteBooking(item.id);
         console.log(resp);
         if (resp.ok) {
-            toast('Booking Delete Successfully!');
+            toast('Booking deleted successfully!');
             updateRecord()
         }
     }
