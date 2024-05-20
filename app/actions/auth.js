@@ -39,11 +39,11 @@ export async function getUser() {
     // get uuid and use it in query to get user data
     let uuid = '';
     const user = await auth_login();
-    console.log(user)
+    //console.log(user)
     if (user.ok) {
         uuid = user.auth.value;
     } else {
-        return {ok: false, data: {username: '', password: ''}}
+        return {ok: false, data: {username: '', email: ''}}
     }
 
     let result;

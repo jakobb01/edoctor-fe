@@ -42,13 +42,13 @@ function Header() {
         }
     ]
 
-    const [user, setUser] = useState({username: '', password: ''});
+    const [user, setUser] = useState({username: '', email: ''});
     const fetchData = async () => {
         const res = await getUser();
         if (res.ok) {
             setUser(res.data);
         } else {
-            setUser({username: '', password: ''})
+            setUser({username: '', email: ''})
         }
     }
 
@@ -83,7 +83,7 @@ function Header() {
                     <PopoverContent className={'w-36'}>
                         <ul className={'flex flex-col gap-2'}>
                             <li key={'profile'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Profile</li>
-                            <li key={'booking'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Booking</li>
+                            <Link key={'booking'} href={'/booking'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Booking</Link>
                             <Link key={'logout'} href={'/login'} onClick={setLogout} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Logout</Link>
                         </ul>
                     </PopoverContent>

@@ -17,3 +17,16 @@ export async function db_insertBooking(req) {
     }
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }
+
+export async function db_getUserBooking(username) {
+    let result;
+    try {
+        result = await sql`SELECT * FROM "Booking" WHERE username = ${username};`;
+    } catch (error) {
+        return {ok: false, data: {error: error.message}};
+    }
+    if (result) {
+        return {ok: true, data: result.rows};
+    }
+    return {ok: false, data: {error: 'Smth went wrong.'}}
+}
