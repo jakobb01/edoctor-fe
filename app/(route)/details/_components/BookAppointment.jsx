@@ -16,7 +16,7 @@ import { Toaster } from "@/components/ui/sonner"
 import {toast} from "sonner";
 import {db_insertBooking} from "@/app/_utils/bookingApi";
 
-export default function BookAppointment({doctorID}) {
+export default function BookAppointment({doctor}) {
 
     const [date, setDate] = useState(new Date())
     const [timeSlot, setTimeSlot] = useState([]);
@@ -73,7 +73,10 @@ export default function BookAppointment({doctorID}) {
                 email: user.email,
                 time: selectedTimeSlot,
                 date: date,
-                doctor: doctorID,
+                doctor_id: doctor.id,
+                doctor_fullname: doctor.name + ' ' + doctor.surname,
+                doctor_picture: doctor.picture,
+                doctor_location: doctor.location,
                 Note: note
             }
         }

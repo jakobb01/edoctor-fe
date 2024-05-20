@@ -19,7 +19,7 @@ export default function DoctorDetail({doctor}) {
                 </h2>
                 <h2 key={doctor.id+'category'} className={'text-sm bg-blue-50 p-1 rounded-full px-2 text-primary'}>{doctor.category}</h2>
 
-                <BookAppointment doctorID={doctor.id}/>
+                <BookAppointment doctor={doctor}/>
             </div>
         </div>
     )
