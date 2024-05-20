@@ -1,13 +1,11 @@
 import React from "react";
-import Landing from "@/app/_components/Landing";
+import Menu from "@/app/(route)/dashboard/_components/Menu";
 
-function Layout({children, params}) {
+export default function Layout({children, params}) {
     return (
         <div className={'h-screen'}>
-            {/*todo: create a menu for choosing services*/}
+            <Menu page={params.service}/>
             {children}
         </div>
     )
 }
-
-export default Layout

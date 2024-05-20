@@ -15,8 +15,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={google_font.className}>
+      <Header/>
         <div className={'md:px-20'}>
-          <Header/>
           {children}
           <Toaster/>
 
