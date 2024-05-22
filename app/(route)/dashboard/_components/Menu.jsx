@@ -14,13 +14,13 @@ export default function Menu() {
             path:'/dashboard/prescriptions'
         },
         {
-            id:'fitnote',
-            name:'Fit Note',
-            path:'/dashboard/fitnote'
+            id:'sicknote',
+            name:'Sick Note',
+            path:'/dashboard/sicknote'
         },
         {
             id:'booking',
-            name:'Booking',
+            name:'Appointments',
             path:'/dashboard/booking'
         }
     ]
