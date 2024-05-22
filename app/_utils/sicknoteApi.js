@@ -28,7 +28,7 @@ export async function db_getUserSickNote(username) {
         return {ok: false, data: {error: error.message}};
     }
     if (result) {
-        return {ok: true, data: result.rows};
+        return {ok: true, data: result.rows[0]};
     }
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }

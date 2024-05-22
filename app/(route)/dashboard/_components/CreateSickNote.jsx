@@ -4,12 +4,16 @@ import {getUser} from "@/app/actions/auth";
 import {toast} from "sonner";
 import {db_insertSickNote} from "@/app/_utils/sicknoteApi";
 import {Textarea} from "@/components/ui/textarea";
-import {redirect} from "next/navigation";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {cn} from "@/lib/utils";
+import {Calendar as CalendarIcon} from "lucide-react";
+import {format} from "date-fns";
+import {Calendar} from "@/components/ui/calendar";
 
 export default function CreateSickNote() {
 
-
-    const [reason, setreason] = useState('');
+    const [date, setDate] = useState(new Date());
+    const [reason, setReason] = useState('');
     const [note, setNote] = useState('');
 
     async function submitSickNote() {
@@ -29,7 +33,7 @@ export default function CreateSickNote() {
             window.location.reload()
         }
 
-        const start = new Date();
+        const start = date
         const end = new Date(Date.now() + (60 * 60 * 24 * 1000 * 7));
 
         // pack data todo: complete the data
@@ -72,17 +76,63 @@ export default function CreateSickNote() {
         <div className={'m-5 bg-blue-50 rounded-lg p-3 shadow-xl'}>
             <h2 className={'text-lg font-bold p-2 border-2 border-blue-50'}>Request a new sick note</h2>
 
-            <div>
-                <h2>Reason</h2>
+            <div className={'mt-3'}>
+                {/* reason */}
+                <label
+                    htmlFor="Reason"
+                    className="p-2 relative block rounded-md border border-gray-200 shadow-sm focus-within:border-black focus-within:ring-1 focus-within:ring-black"
+                >
+                    <input
+                        onChange={(e)=>setReason(e.target.value)}
+                        type="text"
+                        id="Reason"
+                        className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                        placeholder="Username"
+                    />
+
+                    <span
+                        className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-blue-50 p-0.5 text-xs text-primary font-bold transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+                    >
+                        Reason
+                    </span>
+                </label>
+
+                {/* select doctor */}
                 <h2>Select your doctor</h2>
+
+                {/* start date */}
                 <h2>When did your sickness started?</h2>
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant={"outline"}
+                            className={cn(
+                                "w-[280px] justify-start text-left font-normal",
+                                !date && "text-muted-foreground"
+                            )}
+                        >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {date ? format(date, "PPP") : <span>Pick a date</span>}
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                        <Calendar
+                            mode="single"
+                            selected={date}
+                            onSelect={setDate}
+                            initialFocus
+                        />
+                    </PopoverContent>
+                </Popover>
+
+                {/* notes */}
                 <Textarea className="mt-3" placeholder="Note" onChange={(e) => setNote(e.target.value)}/>
 
             </div>
 
 
             <div className={'mt-5 mb-2 flex gap-5'}>
-                <Button variant={'outline'} onC
+                <Button variant={'outline'}
                         className={'hover:bg-white hover:border-red-500 hover:text-red-500'}>
                     Close
                 </Button>

@@ -29,7 +29,7 @@ export default function Menu() {
 
                 <div className="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
                     {services.map((item, index)=> (
-                        <Link href={item.id===page?'/dashboard':item.path}
+                        <Link key={index} href={item.id===page?'/dashboard':item.path}
                               className=
                                   {item.id===page?
                                       "inline-block rounded-md bg-white px-4 py-2 text-sm text-primary shadow-sm focus:relative":
