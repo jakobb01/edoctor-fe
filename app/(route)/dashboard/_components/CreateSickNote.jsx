@@ -34,7 +34,7 @@ export default function CreateSickNote() {
         }
 
         const start = date
-        const end = new Date(Date.now() + (60 * 60 * 24 * 1000 * 7));
+        const end = new Date(date.getTime() + (60 * 60 * 24 * 1000 * 7));
 
         // pack data todo: complete the data
         const data = {
@@ -99,6 +99,7 @@ export default function CreateSickNote() {
 
                 {/* select doctor */}
                 <h2>Select your doctor</h2>
+                {/* todo: get list of doctors and display their names -> on click store id and name of the doctor -> when building data use that values */}
 
                 {/* start date */}
                 <h2>When did your sickness started?</h2>
