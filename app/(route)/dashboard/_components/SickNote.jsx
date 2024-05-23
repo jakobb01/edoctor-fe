@@ -44,7 +44,7 @@ export default function SickNote() {
 
     return (
         <div className={'m-5'}>
-            {/*sicknote && sicknote.ok*/ false ?
+            {sicknote && sicknote.ok ?
                 <ActiveSickNote sicknote={sicknote.data} />
                 :
                 <CreateSickNote/>

@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+"use client"
+import React, {useEffect, useState} from "react";
 import {Button} from "@/components/ui/button";
 import {getUser} from "@/app/actions/auth";
 import {toast} from "sonner";
@@ -9,12 +10,32 @@ import {cn} from "@/lib/utils";
 import {Calendar as CalendarIcon} from "lucide-react";
 import {format} from "date-fns";
 import {Calendar} from "@/components/ui/calendar";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import {db_getDoctors} from "@/app/_utils/doctorApi";
 
 export default function CreateSickNote() {
 
+    const [doctorList, setDoctorList]=useState([]);
+    const [selectedDoctor, setSelectedDoctor]=useState({});
     const [date, setDate] = useState(new Date());
     const [reason, setReason] = useState('');
     const [note, setNote] = useState('');
+
+    useEffect(()=>{
+        getDoctorList();
+    }, [])
+
+    const getDoctorList=()=>{
+        db_getDoctors().then(resp=>{
+            setDoctorList(resp.data);
+        })
+    }
 
     async function submitSickNote() {
         // get user data from cookies
@@ -44,9 +65,8 @@ export default function CreateSickNote() {
                 end: end,
                 reason: reason,
                 note: note,
-                doctor_id: 1,
-                doctor_fullname: 'doctor.name +  + doctor.surname',
-
+                doctor_id: selectedDoctor.id,
+                doctor_fullname: selectedDoctor.fullname
             }
         }
 
@@ -80,18 +100,18 @@ export default function CreateSickNote() {
                 {/* reason */}
                 <label
                     htmlFor="Reason"
-                    className="p-2 relative block rounded-md border border-gray-200 shadow-sm focus-within:border-black focus-within:ring-1 focus-within:ring-black"
+                    className="p-2 bg-white relative block rounded-md border border-gray-200 shadow-sm focus-within:border-primary focus-within:ring-1 focus-within:ring-black"
                 >
                     <input
                         onChange={(e)=>setReason(e.target.value)}
                         type="text"
                         id="Reason"
-                        className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                        className="peer border-none bg-white placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
                         placeholder="Username"
                     />
 
                     <span
-                        className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-blue-50 p-0.5 text-xs text-primary font-bold transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+                        className="pointer-events-none absolute start-2.5 -top-3 -translate-y-1/2 p-0.5 text-xs text-secondary font-bold transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:-top-3 peer-focus:text-sm"
                     >
                         Reason
                     </span>
@@ -99,7 +119,24 @@ export default function CreateSickNote() {
 
                 {/* select doctor */}
                 <h2>Select your doctor</h2>
-                {/* todo: get list of doctors and display their names -> on click store id and name of the doctor -> when building data use that values */}
+                {/* get list of doctors and display their names -> on click store id and name of the doctor */}
+                <Select
+                        onValueChange={(value) => {
+                            const fullnameDoc = 'Dr. '+value.name+' '+value.surname;
+                            setSelectedDoctor({id: value.id, fullname: fullnameDoc})
+                        }}>
+                    <SelectTrigger className="w-[180px] bg-white">
+                        <SelectValue placeholder="Select a doctor" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {doctorList&&doctorList.map((doctor, index)=>(
+                            <SelectItem key={index} value={doctor}>{'Dr. '+doctor.name+' '+doctor.surname}</SelectItem>
+                        ))}
+
+                    </SelectContent>
+                </Select>
+
+
 
                 {/* start date */}
                 <h2>When did your sickness started?</h2>
@@ -127,7 +164,7 @@ export default function CreateSickNote() {
                 </Popover>
 
                 {/* notes */}
-                <Textarea className="mt-3" placeholder="Note" onChange={(e) => setNote(e.target.value)}/>
+                <Textarea className="mt-3 bg-white" placeholder="Note" onChange={(e) => setNote(e.target.value)}/>
 
             </div>
 
