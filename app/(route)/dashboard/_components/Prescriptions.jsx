@@ -8,8 +8,10 @@ import {cn} from "@/lib/utils";
 import {Calendar as CalendarIcon} from "lucide-react";
 import {format} from "date-fns";
 import {Calendar} from "@/components/ui/calendar";
-import Image from "next/image";
-import {db_getMedicine} from "@/app/_utils/medicineApi";
+import {db_getMedicine, db_getUserPrescription, db_insertPrescription} from "@/app/_utils/medicineApi";
+import {auth_login} from "@/app/actions/auth";
+import {toast} from "sonner";
+import moment from "moment/moment";
 
 export default function Prescriptions() {
 
@@ -26,6 +28,7 @@ export default function Prescriptions() {
     useEffect(() => {
         getDoctorList();
         getMedicineList();
+        getPrescriptionList();
     }, [])
 
     const getDoctorList=()=>{
@@ -38,6 +41,17 @@ export default function Prescriptions() {
         db_getMedicine().then(resp=>{
             setMedicineList(resp.data);
         })
+    }
+
+    const getPrescriptionList=async () => {
+        let user_id;
+        let res = await auth_login();
+        if (res.ok) {
+            user_id = res.auth.value;
+        }
+        db_getUserPrescription(user_id).then(resp => {
+            setPrescriptionList(resp.data);
+        });
     }
 
     const handleMinus = () => {
@@ -59,7 +73,48 @@ export default function Prescriptions() {
     };
     
     async function submitPrescription() {
-        
+        // get user id from cookies
+        let user;
+        const res = await auth_login();
+        if (res.ok) {
+            user = res.auth;
+        } else {
+            alert("Problem occurred during submitting, please try again!")
+            window.location.reload()
+        }
+
+        // pack data
+        const from = date
+        const until = new Date(date.getTime() + (60 * 60 * 24 * 1000 * 14));
+        const data = {
+            data: {
+                user_id: user.value,
+                from: from,
+                till: until,
+                quantity: quantity,
+                doctor_id: selectedDoctor.id,
+                doctor_fullname: selectedDoctor.fullname,
+                drug_id: selectedMedicine.id,
+                drug_name: selectedMedicine.name
+            }
+        }
+
+        if (data) {
+            const insertPrescription = await db_insertPrescription(data)
+            if (insertPrescription.ok) {
+                toast(<div>
+                    <h2 className={'text-bold text-lg text-primary'}>Request for prescription successful</h2>
+                    <p className={'text-secondary text-base'}>We will notify you when the prescription will be ready.</p>
+                </div>)
+                await getPrescriptionList();
+            } else {
+                alert("Db insertion fail")
+                window.location.reload()
+            }
+        } else {
+            alert("Data not ok")
+            window.location.reload()
+        }
     }
 
     return (
@@ -80,24 +135,26 @@ export default function Prescriptions() {
                     </thead>
 
                     <tbody className="divide-y divide-gray-200">
-                    {!prescriptionList.length > 0 ?
-                        <tr>
-                            <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{'PRS'+1}</td>
-                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">iBUPROFEN</td>
-                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">25.5.2024</td>
-                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">24.6.2024</td>
-                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">10</td>
-                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">Dr. Gregory House</td>
-                            <td className="whitespace-nowrap px-4 py-2">
-                                <Button
-                                    className="inline-block px-4 py-2 text-xs font-medium hover:bg-blue-50 hover:text-primary hover:scale-105 transition-all ease-in-out"
-                                >
-                                    Order
-                                </Button>
-                            </td>
-                        </tr>
+                    {prescriptionList.length > 0 ? prescriptionList.map((prescription, index) =>(
+                            <tr key={index}>
+                                <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{'PRS'+0+(index+1)}</td>
+                                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{prescription.drug_name}</td>
+                                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{moment(prescription.from).format('DD-MMM-YYYY')}</td>
+                                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{moment(prescription.till).format('DD-MMM-YYYY')}</td>
+                                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{prescription.quantity}</td>
+                                <td className="whitespace-nowrap px-4 py-2 text-gray-700">{prescription.doctor_fullname}</td>
+                                <td className="whitespace-nowrap px-4 py-2">
+                                    <Button
+                                        className="inline-block px-4 py-2 text-xs font-medium hover:bg-blue-50 hover:text-primary hover:scale-105 transition-all ease-in-out"
+                                    >
+                                        Order
+                                    </Button>
+                                </td>
+                            </tr>
+                    ))
+
                         :
-                        <div className={'animate-pulse text-lg text-center mt-5'}>Loading...</div>
+                        <tr className={'animate-pulse text-lg text-center mt-5'}><td>Loading...</td></tr>
                     }
                     </tbody>
                 </table>
