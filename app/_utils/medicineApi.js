@@ -32,6 +32,19 @@ export async function db_getUserPrescription(user_id) {
     }
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }
+
+export async function db_getMedicine() {
+    let result;
+    try {
+        result = await sql`SELECT * FROM "Drug";`;
+    } catch (error) {
+        return {ok: false, data: {error: error.message}};
+    }
+    if (result) {
+        return {ok: true, data: result.rows};
+    }
+    return {ok: false, data: {error: 'Smth went wrong.'}}
+}
 /*
 
 export async function db_deleteBooking(booking_id) {
