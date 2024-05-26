@@ -12,6 +12,7 @@ import {db_getMedicine, db_getUserPrescription, db_insertPrescription} from "@/a
 import {auth_login} from "@/app/actions/auth";
 import {toast} from "sonner";
 import moment from "moment/moment";
+import Link from "next/link";
 
 export default function Prescriptions() {
 
@@ -144,11 +145,13 @@ export default function Prescriptions() {
                                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">{prescription.quantity}</td>
                                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">{prescription.doctor_fullname}</td>
                                 <td className="whitespace-nowrap px-4 py-2">
-                                    <Button
-                                        className="inline-block px-4 py-2 text-xs font-medium hover:bg-blue-50 hover:text-primary hover:scale-105 transition-all ease-in-out"
-                                    >
-                                        Order
-                                    </Button>
+                                    <Link href={'/pharmacy/order'}>
+                                        <Button
+                                            className="inline-block px-4 py-2 text-xs font-medium hover:bg-blue-50 hover:text-primary hover:scale-105 transition-all ease-in-out"
+                                        >
+                                            Order
+                                        </Button>
+                                    </Link>
                                 </td>
                             </tr>
                     ))
