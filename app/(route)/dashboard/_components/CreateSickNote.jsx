@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select"
 import {db_getDoctors} from "@/app/_utils/doctorApi";
 
-export default function CreateSickNote() {
+export default function CreateSickNote({getCurrentSickNote}) {
 
     const [doctorList, setDoctorList]=useState([]);
     const [selectedDoctor, setSelectedDoctor]=useState({});
@@ -70,7 +70,6 @@ export default function CreateSickNote() {
             }
         }
 
-        console.log(data)
         // insert data into db
         if (data) {
             const insertSickNote = await db_insertSickNote(data)
@@ -80,6 +79,7 @@ export default function CreateSickNote() {
                     <p className={'text-secondary text-base'}>We will notify you when the document will be ready.</p>
                 </div>)
                 // todo: do smth after successful insertion
+                getCurrentSickNote()
             } else {
                 alert("Db insertion fail")
                 window.location.reload()
@@ -158,6 +158,9 @@ export default function CreateSickNote() {
                             mode="single"
                             selected={date}
                             onSelect={setDate}
+                            disabled={(day) => {
+                                return day > new Date();
+                            }}
                             initialFocus
                         />
                     </PopoverContent>

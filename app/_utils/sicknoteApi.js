@@ -27,17 +27,16 @@ export async function db_getUserSickNote(username) {
     } catch (error) {
         return {ok: false, data: {error: error.message}};
     }
-    if (result) {
+    if (result.rows.length>0) {
         return {ok: true, data: result.rows[0]};
     }
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }
-/*
 
-export async function db_deleteBooking(booking_id) {
+export async function db_deleteSickNote(sicknote_id) {
     let result;
     try {
-        result = await sql`DELETE FROM "Booking" WHERE id = ${booking_id};`;
+        result = await sql`DELETE FROM "Sicknote" WHERE id = ${sicknote_id};`;
     } catch (error) {
         return {ok: false, data: {error: error.message}};
     }
@@ -46,5 +45,3 @@ export async function db_deleteBooking(booking_id) {
     }
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }
-
- */

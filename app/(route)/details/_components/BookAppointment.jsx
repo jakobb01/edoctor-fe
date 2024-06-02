@@ -81,7 +81,6 @@ export default function BookAppointment({doctor}) {
                 note: note
             }
         }
-        console.log(data)
 
         // call db function to store booking
         if (data) {
@@ -101,13 +100,7 @@ export default function BookAppointment({doctor}) {
             alert("Data not ok")
             window.location.reload()
         }
-
-
-
-
-
     }
-
 
     return (
         <Dialog>

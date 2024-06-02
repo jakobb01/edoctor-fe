@@ -1,16 +1,14 @@
 "use client"
 import React, {useEffect, useState} from "react";
-import {
-    validateGoogleFontFunctionCall
-} from "next/dist/compiled/@next/font/dist/google/validate-google-font-function-call";
 import ActiveSickNote from "@/app/(route)/dashboard/_components/ActiveSickNote";
 import CreateSickNote from "@/app/(route)/dashboard/_components/CreateSickNote";
 import {db_getUserSickNote} from "@/app/_utils/sicknoteApi";
 import {getUser} from "@/app/actions/auth";
+import {toast} from "sonner";
 
 export default function SickNote() {
 
-    const [sicknote, setSickNote] = useState();
+    const [sicknote, setSickNote] = useState({ok: false, data: null});
 
     async function getCurrentSickNote() {
         // get user data from cookies
@@ -28,14 +26,16 @@ export default function SickNote() {
             if (resp.ok) {
                 setSickNote(resp)
             } else {
-                alert("Problem occurred during -database resp-, please try again!")
-                window.location.reload()
+                // toast that user has currently no active sick note
+                toast(<div>
+                    <h2 className={'text-bold text-lg text-primary'}>No active sick note.</h2>
+                    <p className={'text-secondary text-base'}>You can request one if you think you are sick.</p>
+                </div>)
             }
         } else {
             alert("Data not ok")
             window.location.reload()
         }
-        //setSickNote({ok: true, data: {username: 'Fake name 123', start:'24-3-2024', end:'28-5-2024', reason:'Flu', note:'Pacient should check again before going to work', doctor_fullname: 'Dr. Glue House'}})
     }
 
     useEffect(() => {
@@ -45,9 +45,9 @@ export default function SickNote() {
     return (
         <div className={'m-5'}>
             {sicknote && sicknote.ok ?
-                <ActiveSickNote sicknote={sicknote.data} />
+                <ActiveSickNote sicknote={sicknote.data}/>
                 :
-                <CreateSickNote/>
+                <CreateSickNote getCurrentSickNote={getCurrentSickNote}/>
             }
 
             {/*
