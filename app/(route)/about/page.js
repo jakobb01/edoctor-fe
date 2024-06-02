@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function About() {
+export default function About () {
     return (
         <div className="text-center mt-5">
             <p className="text-xl font-bold text-primary">About Us</p>

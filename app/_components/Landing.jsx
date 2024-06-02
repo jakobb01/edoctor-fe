@@ -14,11 +14,11 @@ function Landing ({user}) {
                         <p className="mt-4 text-secondary">
                             Simply choose a service you need. We will navigate you through.
                         </p>
-                        <p className={'mt-1 text-secondary'}>
+                        <p className={ 'mt-1 text-secondary' }>
                             You can do it from anywhere, anytime.
                         </p>
 
-                        {user?''
+                        { user ? ''
                             :
                             <Link href={ '/login' }>
                                 <Button

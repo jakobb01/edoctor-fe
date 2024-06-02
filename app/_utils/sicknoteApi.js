@@ -1,16 +1,16 @@
 "use server"
 import React from "react";
-import { sql } from "@vercel/postgres";
-import { v4 as uuidv4 } from 'uuid';
+import {sql} from "@vercel/postgres";
+import {v4 as uuidv4} from 'uuid';
 
-export async function db_insertSickNote(req) {
-    const { username, start, end, reason, note, doctor_id, doctor_fullname } = req.data;
-    const id = uuidv4();
+export async function db_insertSickNote (req) {
+    const {username, start, end, reason, note, doctor_id, doctor_fullname} = req.data;
+    const id = uuidv4 ();
     let result;
     try {
         result = await sql`INSERT INTO "Sicknote" (id, username, start, "end", reason, note, doctor_id, doctor_fullname)
         VALUES (${id}, ${username}, ${start}, ${end}, ${reason}, ${note}, ${doctor_id}, ${doctor_fullname});`;
-        console.log(result.rows[0])
+        //console.log(result.rows[0])
     } catch (error) {
         return {ok: false, data: {error: error.message}};
     }
@@ -20,20 +20,20 @@ export async function db_insertSickNote(req) {
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }
 
-export async function db_getUserSickNote(username) {
+export async function db_getUserSickNote (username) {
     let result;
     try {
         result = await sql`SELECT * FROM "Sicknote" WHERE username = ${username};`;
     } catch (error) {
         return {ok: false, data: {error: error.message}};
     }
-    if (result.rows.length>0) {
+    if (result.rows.length > 0) {
         return {ok: true, data: result.rows[0]};
     }
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }
 
-export async function db_deleteSickNote(sicknote_id) {
+export async function db_deleteSickNote (sicknote_id) {
     let result;
     try {
         result = await sql`DELETE FROM "Sicknote" WHERE id = ${sicknote_id};`;

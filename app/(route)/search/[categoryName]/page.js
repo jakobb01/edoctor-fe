@@ -1,8 +1,7 @@
 "use client"
 import React, {useEffect, useState} from "react";
-import ClientReq from "@/app/_utils/ClientReq";
 import PopularDoctor from "@/app/_components/PopularDoctor";
-import {db_getDoctorById, db_getDoctorsByCategory} from "@/app/_utils/doctorApi";
+import {db_getDoctorsByCategory} from "@/app/_utils/doctorApi";
 
 function Search({params}) {
     const category = params.categoryName.replace(/%20/g, " ");

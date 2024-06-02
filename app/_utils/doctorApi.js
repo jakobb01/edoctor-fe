@@ -1,8 +1,8 @@
 "use server"
 import React from "react";
-import { sql } from "@vercel/postgres";
+import {sql} from "@vercel/postgres";
 
-export async function db_getDoctorById(id) {
+export async function db_getDoctorById (id) {
     let result;
     try {
         result = await sql`SELECT * FROM "Doctor" WHERE id = ${id};`;
@@ -17,7 +17,7 @@ export async function db_getDoctorById(id) {
 
 }
 
-export async function db_getDoctors() {
+export async function db_getDoctors () {
     let result;
     try {
         result = await sql`SELECT * FROM "Doctor";`;
@@ -30,11 +30,23 @@ export async function db_getDoctors() {
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }
 
-export async function db_getDoctorsByCategory(category) {
+export async function db_getDoctorsByCategory (category) {
     let result;
     try {
         result = await sql`SELECT * FROM "Doctor" WHERE category = ${category};`;
-        console.log(result.rows)
+    } catch (error) {
+        return {ok: false, data: {error: error.message}};
+    }
+    if (result) {
+        return {ok: true, data: result.rows};
+    }
+    return {ok: false, data: {error: 'Smth went wrong.'}}
+}
+
+export async function db_getCategory () {
+    let result;
+    try {
+        result = await sql`SELECT * FROM "Category"`;
     } catch (error) {
         return {ok: false, data: {error: error.message}};
     }

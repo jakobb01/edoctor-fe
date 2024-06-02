@@ -10,9 +10,9 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from '@/components/ui/button'
+import {Button} from '@/components/ui/button'
 
-export default function CancelAppointment({onContinueClick}) {
+export default function CancelAppointment ({onContinueClick}) {
 
 
     return (
@@ -30,7 +30,7 @@ export default function CancelAppointment({onContinueClick}) {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={()=>onContinueClick()}>Continue</AlertDialogAction>
+                    <AlertDialogAction onClick={ () => onContinueClick () }>Continue</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

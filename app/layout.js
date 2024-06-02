@@ -7,7 +7,7 @@ import {Toaster} from "@/components/ui/sonner";
 const google_font = Raleway({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "eDoctor",
+  title: "eDoktor",
   description: "Health made simple.",
 };
 

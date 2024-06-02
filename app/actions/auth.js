@@ -1,12 +1,12 @@
 "use server"
 import React from "react";
-import { v4 as uuidv4 } from 'uuid';
-import { sql } from "@vercel/postgres";
+import {v4 as uuidv4} from 'uuid';
+import {sql} from "@vercel/postgres";
 import {compare, hash} from "@/app/bcrypt/custom_bcrypt";
-import { cookies } from 'next/headers';
+import {cookies} from 'next/headers';
 
 
-export async function signup(formData) {
+export async function signup (formData) {
     // Get form fields
     const username = formData.username;
     const email = formData.email;
@@ -14,8 +14,8 @@ export async function signup(formData) {
 
 
     // generate uuid && hash pasword
-    const id = uuidv4();
-    const hash_pass = hash(password)
+    const id = uuidv4 ();
+    const hash_pass = hash (password)
     try {
         await sql`INSERT INTO "User" (uuid, username, email, password) VALUES (${id}, ${username}, ${email}, ${hash_pass});`;
     } catch (error) {
@@ -25,9 +25,9 @@ export async function signup(formData) {
     return {ok: result.rows};
 }
 
-export async function auth_login() {
+export async function auth_login () {
     // check user session
-    const token = cookies().get('token');
+    const token = cookies ().get ('token');
     if (token) {
         return {ok: true, auth: token};
     } else {
@@ -35,10 +35,10 @@ export async function auth_login() {
     }
 }
 
-export async function getUser() {
+export async function getUser () {
     // get uuid and use it in query to get user data
     let uuid = '';
-    const user = await auth_login();
+    const user = await auth_login ();
     //console.log(user)
     if (user.ok) {
         uuid = user.auth.value;
@@ -57,7 +57,7 @@ export async function getUser() {
     return {ok: true, data: result.rows[0]}
 }
 
-export async function login(formData) {
+export async function login (formData) {
     // Get form fields
     const username = formData.username;
     const password = formData.password;
@@ -71,14 +71,14 @@ export async function login(formData) {
     }
 
     try {
-        compare_psw = compare(password, result.rows[0].password);
+        compare_psw = compare (password, result.rows[0].password);
     } catch (error) {
         return {ok: false, status: error.message};
     }
 
     if (compare_psw) {
         // get uuid and set cookies
-        cookies().set('token', result.rows[0].uuid, { maxAge: 3600 });
+        cookies ().set ('token', result.rows[0].uuid, {maxAge: 3600});
         return {ok: true, status: result.rows[0].uuid};
     } else {
         return {ok: false, status: 'Password does not match'};
@@ -88,7 +88,7 @@ export async function login(formData) {
 
 }
 
-export async function logout() {
+export async function logout () {
     // logout user -> cancel session
-    cookies().delete('token');
+    cookies ().delete ('token');
 }
