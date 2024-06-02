@@ -14,24 +14,24 @@ function Footer () {
 
                         <ul className="mt-8 space-y-4 text-sm">
                             <li>
-                                <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
+                                <a className="text-gray-700 transition hover:text-gray-700/75" href="/about">
                                     Company History
                                 </a>
                             </li>
 
                             <li>
-                                <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Meet the
+                                <a className="text-gray-700 transition hover:text-gray-700/75" href="/about"> Meet the
                                     Team </a>
                             </li>
 
                             <li>
-                                <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
+                                <a className="text-gray-700 transition hover:text-gray-700/75" href="/about">
                                     Employee Handbook
                                 </a>
                             </li>
 
                             <li>
-                                <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Careers </a>
+                                <a className="text-gray-700 transition hover:text-gray-700/75" href="/about"> Careers </a>
                             </li>
                         </ul>
                     </div>
@@ -54,22 +54,22 @@ function Footer () {
 
                             <li>
                                 <Link className="text-gray-700 transition hover:text-gray-700/75"
-                                      href="/dashboard/fitnote">
-                                    Request a fit note
+                                      href="/dashboard/sicknote">
+                                    Manage sick note
                                 </Link>
                             </li>
 
                             <li>
                                 <Link className="text-gray-700 transition hover:text-gray-700/75"
-                                      href="/dashboard/prescription">
+                                      href="/dashboard/prescriptions">
                                     Request a prescription
                                 </Link>
                             </li>
 
                             <li>
                                 <Link className="text-gray-700 transition hover:text-gray-700/75"
-                                      href="/dashboard/records">
-                                    Access to medical records
+                                      href="/dashboard/prescriptions">
+                                    Order a medicine
                                 </Link>
                             </li>
                         </ul>
@@ -81,28 +81,15 @@ function Footer () {
 
                         <ul className="mt-8 space-y-4 text-sm">
                             <li>
-                                <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> FAQs </a>
+                                <a className="text-gray-700 transition hover:text-gray-700/75" href="/about"> FAQs </a>
                             </li>
 
                             <li>
-                                <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Support </a>
+                                <a className="text-gray-700 transition hover:text-gray-700/75" href="/about"> Support </a>
                             </li>
 
                             <li>
-                                <a
-                                    className="group flex justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-                                    href="#"
-                                >
-                                    <span
-                                        className="text-gray-700 transition group-hover:text-gray-700/75"> Live Chat </span>
-
-                                    <span className="relative flex h-2 w-2">
-                <span
-                    className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"
-                ></span>
-                <span className="relative inline-flex size-2 rounded-full bg-teal-500"></span>
-              </span>
-                                </a>
+                                <a className="text-gray-700 transition hover:text-gray-700/75" href="/profile"> Profile </a>
                             </li>
                         </ul>
                     </div>
@@ -112,8 +99,7 @@ function Footer () {
 
                         <div className="mx-auto mt-8 max-w-md sm:ms-0">
                             <p className="text-center leading-relaxed text-gray-500 ltr:sm:text-left rtl:sm:text-right">
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum id, iure consectetur et
-                                error hic!
+                                Get news, real-time updates and much more directly to you.
                             </p>
 
                             <form className="mt-4">

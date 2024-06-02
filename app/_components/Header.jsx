@@ -86,7 +86,7 @@ function Header () {
                         <ul className={ 'flex flex-col gap-2' }>
                             <Link key={ 'profile' } href={ '/profile' }
                                   className={ 'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md' }>Profile</Link>
-                            <Link key={ 'booking' } href={ '/booking' }
+                            <Link key={ 'booking' } href={ '/dashboard/booking' }
                                   className={ 'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md' }>Booking</Link>
                             <Link key={ 'logout' } href={ '/login' } onClick={ setLogout }
                                   className={ 'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md' }>Logout</Link>

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function About () {
     return (
-        <div className="text-center mt-5">
+        <div className="text-center mt-16 h-96">
             <p className="text-xl font-bold text-primary">About Us</p>
 
             <ul className="mt-8 space-y-4 text-sm">
