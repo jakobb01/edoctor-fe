@@ -4,12 +4,15 @@ import CategorySearch from "@/app/_components/CategorySearch";
 import PopularDoctor from "@/app/_components/PopularDoctor";
 import {useEffect, useState} from "react";
 import {db_getDoctors} from "@/app/_utils/doctorApi";
+import {auth_login} from "@/app/actions/auth";
 
 export default function Home() {
     const [doctorList, setDoctorList] = useState([]);
+    const [userLogged, setUserLogged] = useState(false);
 
     useEffect(()=>{
         getDoctorList();
+        userLoggedIn();
     }, [])
     const getDoctorList=()=>{
         // getFunction(params.recordId)
@@ -18,9 +21,15 @@ export default function Home() {
         })
     }
 
+    const userLoggedIn=() =>{
+        auth_login().then(resp => {
+            setUserLogged(resp.ok)
+        })
+    }
+
     return (
         <div>
-            <Landing/>
+            <Landing user={userLogged}/>
 
             <CategorySearch categoryOnOff={true}/>
 

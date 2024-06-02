@@ -14,6 +14,12 @@ import { CircleUserRound } from 'lucide-react';
 
 
 function Header() {
+    {/*removed from menu: {
+            id:4,
+            name:'Pharmacy',
+            path:'/pharmacy'
+        },*/}
+
     const Menu =[
         {
             id:1,
@@ -29,11 +35,6 @@ function Header() {
             id:3,
             name:'Dashboard',
             path:'/dashboard'
-        },
-        {
-            id:4,
-            name:'Pharmacy',
-            path:'/pharmacy'
         },
         {
             id:5,
@@ -82,7 +83,7 @@ function Header() {
                     </PopoverTrigger>
                     <PopoverContent className={'w-36'}>
                         <ul className={'flex flex-col gap-2'}>
-                            <li key={'profile'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Profile</li>
+                            <Link key={'profile'} href={'/profile'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Profile</Link>
                             <Link key={'booking'} href={'/booking'} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Booking</Link>
                             <Link key={'logout'} href={'/login'} onClick={setLogout} className={'text-primary cursor-pointer hover:bg-blue-50 p-2 rounded-md'}>Logout</Link>
                         </ul>

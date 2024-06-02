@@ -1,9 +1,13 @@
-import React from "react";
+"use client"
+import React, {useEffect} from "react";
 
 export default function Pharmacy() {
+    useEffect(()=>{
+        window.location.assign('/dashboard')
+    }, [])
     return (
         <div>
-            BEST DRUGS
+            Redirect to dashboard...
         </div>
     )
 }

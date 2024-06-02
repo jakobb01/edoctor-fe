@@ -26,7 +26,7 @@ export default function LoginForm() {
         if (success) {
             const res = await login(formState);
             if (res.ok) {
-                await window.location.assign('/dashboard')
+                await window.location.assign('/')
             } else {
                 setFail(true)
                 document.getElementById("loginForm").reset();
