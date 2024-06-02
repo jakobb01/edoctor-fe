@@ -33,6 +33,33 @@ export async function db_getUserPrescription (user_id) {
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }
 
+export async function db_getPrescriptionById (prescription_id) {
+    let result;
+    try {
+        result = await sql`SELECT * FROM "Prescription" WHERE id = ${prescription_id};`;
+    } catch (error) {
+        return {ok: false, data: {error: error.message}};
+    }
+    if (result.rows.length > 0) {
+        return {ok: true, data: result.rows[0]};
+    }
+    return {ok: false, data: {error: 'Smth went wrong.'}}
+}
+
+export async function db_deletePrescriptionById (prescription_id) {
+    let result;
+    try {
+        result = await sql`DELETE FROM "Prescription" WHERE id = ${prescription_id};`;
+    } catch (error) {
+        return {ok: false, data: {error: error.message}};
+    }
+    if (result) {
+        return {ok: true, data: result.rows};
+    }
+    return {ok: false, data: {error: 'Smth went wrong.'}}
+}
+
+
 export async function db_getMedicine () {
     let result;
     try {
@@ -46,19 +73,15 @@ export async function db_getMedicine () {
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }
 
-/*
-
-export async function db_deleteBooking(booking_id) {
+export async function db_getMedicineById (medicine_id) {
     let result;
     try {
-        result = await sql`DELETE FROM "Booking" WHERE id = ${booking_id};`;
+        result = await sql`SELECT * FROM "Drug" WHERE id = ${medicine_id};`;
     } catch (error) {
         return {ok: false, data: {error: error.message}};
     }
-    if (result) {
-        return {ok: true, data: result.rows};
+    if (result.rows.length > 0) {
+        return {ok: true, data: result.rows[0]};
     }
     return {ok: false, data: {error: 'Smth went wrong.'}}
 }
-
- */

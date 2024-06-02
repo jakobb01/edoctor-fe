@@ -145,7 +145,7 @@ export default function Prescriptions() {
                                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">{prescription.quantity}</td>
                                 <td className="whitespace-nowrap px-4 py-2 text-gray-700">{prescription.doctor_fullname}</td>
                                 <td className="whitespace-nowrap px-4 py-2">
-                                    <Link href={'/pharmacy/order'}>
+                                    <Link href={`/pharmacy/order?prescriptionId=${prescription.id}`}>
                                         <Button
                                             className="inline-block px-4 py-2 text-xs font-medium hover:bg-blue-50 hover:text-primary hover:scale-105 transition-all ease-in-out"
                                         >

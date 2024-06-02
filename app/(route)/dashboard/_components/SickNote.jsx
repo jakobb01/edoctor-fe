@@ -42,6 +42,7 @@ export default function SickNote() {
         getCurrentSickNote();
     }, [])
 
+    // todo: skeleton loading for sicknote
     return (
         <div className={'m-5'}>
             {sicknote && sicknote.ok ?
